@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProdukIcalzStore</title>
+    <title>Payment ICALZ STORE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -12,422 +12,459 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background-color: #000;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             color: #fff;
-            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            perspective: 1000px;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
-        
+
         header {
             text-align: center;
             padding: 40px 0;
-            background: linear-gradient(to right, #111, #333, #111);
-            margin-bottom: 30px;
-            border-bottom: 2px solid #25D366;
+            position: relative;
         }
-        
-        header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            background: linear-gradient(to right, #25D366, #128C7E);
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00dbde, #fc00ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateZ(30px);
         }
-        
-        header p {
+
+        .tagline {
             font-size: 1.2rem;
-            color: #ccc;
-            max-width: 600px;
-            margin: 0 auto;
+            color: #b8c2cc;
+            margin-bottom: 30px;
+            transform: translateZ(20px);
         }
-        
-        .products {
+
+        /* Styling untuk bagian informasi fee */
+        .fee-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fee-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff9a00, #ff2e00);
+        }
+
+        .fee-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            color: #ff9a00;
+        }
+
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .fee-table th, .fee-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .fee-table th {
+            background: rgba(255, 154, 0, 0.2);
+            font-weight: 600;
+        }
+
+        .fee-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .payment-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
-        
-        .product {
-            background-color: #111;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .product:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.2);
-        }
-        
-        .product-img-container {
+
+        .payment-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
         }
-        
-        .product-img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-bottom: 2px solid #25D366;
-            transition: transform 0.5s ease;
+
+        .payment-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
-        
-        .product-img-container:hover .product-img {
-            transform: scale(1.05);
-        }
-        
-        .zoom-icon {
+
+        .payment-card::before {
+            content: '';
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00dbde, #fc00ff);
+        }
+
+        .payment-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .payment-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .payment-detail {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-align: center;
+            word-break: break-all;
+            transition: all 0.3s ease;
+        }
+
+        .payment-detail:hover {
+            background: rgba(0, 0, 0, 0.3);
+            transform: scale(1.02);
+        }
+
+        .qris-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
-        
-        .product-img-container:hover .zoom-icon {
-            opacity: 1;
-        }
-        
-        .product-info {
-            padding: 20px;
-        }
-        
-        .product-title {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-        
-        .product-desc {
-            color: #aaa;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-        
-        .whatsapp-section {
-            background-color: #111;
-            padding: 30px;
+
+        .qris-image {
+            width: 200px;
+            height: 200px;
             border-radius: 10px;
-            margin-bottom: 40px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
-        
-        .whatsapp-section h2 {
+            overflow: hidden;
             margin-bottom: 20px;
-            color: #25D366;
-            font-size: 1.8rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
         }
-        
-        .buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
+
+        .qris-image:hover {
+            transform: scale(1.05);
         }
-        
+
+        .qris-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .btn {
             display: inline-block;
             padding: 12px 25px;
-            background-color: #25D366;
+            background: linear-gradient(45deg, #00dbde, #fc00ff);
             color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: all 0.3s ease;
             border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            text-align: center;
-            flex: 1;
-            min-width: 200px;
-            max-width: 300px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateZ(10px);
         }
-        
+
         .btn:hover {
-            background-color: #128C7E;
-            transform: scale(1.05);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
-        
-        .btn-wa {
-            background-color: #25D366;
+
+        .btn i {
+            margin-right: 8px;
         }
-        
-        .btn-group {
-            background-color: #075E54;
-        }
-        
-        .btn-channel {
-            background-color: #128C7E;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #111;
-            color: #aaa;
-            margin-top: 30px;
-            border-top: 1px solid #333;
-        }
-        
-        /* Lightbox Styles */
-        .lightbox {
-            display: none;
+
+        .floating-elements {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            pointer-events: none;
+            z-index: -1;
         }
-        
-        .lightbox.active {
-            display: flex;
-        }
-        
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            border-radius: 5px;
-            box-shadow: 0 0 30px rgba(37, 211, 102, 0.3);
-        }
-        
-        .lightbox-close {
+
+        .floating-element {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        
-        .lightbox-close:hover {
-            color: #25D366;
-        }
-        
-        .lightbox-nav {
-            position: absolute;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        
-        .lightbox-prev, .lightbox-next {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            font-size: 30px;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
+            animation: float 15s infinite linear;
         }
-        
-        .lightbox-prev:hover, .lightbox-next:hover {
-            background-color: #25D366;
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
-        
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #b8c2cc;
+            font-size: 0.9rem;
+        }
+
+        /* Efek 3D untuk latar belakang */
+        .bg-3d {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: url('https://files.catbox.moe/n83yo8.jpg') no-repeat center center;
+            background-size: cover;
+            transform: translateZ(-50px) scale(1.5);
+            filter: brightness(0.3) blur(2px);
+        }
+
+        /* Responsif */
         @media (max-width: 768px) {
-            .buttons {
-                flex-direction: column;
-                align-items: center;
+            .payment-container {
+                grid-template-columns: 1fr;
             }
             
-            .btn {
-                width: 100%;
-                max-width: 100%;
+            .logo {
+                font-size: 2.5rem;
             }
             
-            header h1 {
-                font-size: 2rem;
+            .fee-table {
+                font-size: 0.85rem;
             }
             
-            .lightbox-nav {
-                padding: 0 10px;
-            }
-            
-            .lightbox-prev, .lightbox-next {
-                width: 40px;
-                height: 40px;
-                font-size: 24px;
+            .fee-table th, .fee-table td {
+                padding: 8px 6px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="bg-3d"></div>
+    
+    <div class="floating-elements" id="floatingElements"></div>
+    
     <div class="container">
         <header>
-            <h1>Produk IcalzStore </h1>
-            <p></p>
+            <h1 class="logo">PAYMENT ICALZ</h1>
+            <p class="tagline">Pembayaran Mudah & Cepat</p>
         </header>
         
-                <div class="whatsapp-section">
-            <h2>Terhubung dengan Kami</h2>
-            <p>Untuk informasi lebih lanjut, pemesanan, atau pertanyaan seputar produk kami</p>
-            
-            <div class="buttons">
-                <a href="https://wa.me/6285719223499" class="btn btn-wa">WhatsApp Admin</a>
-                <a href="https://chat.whatsapp.com/IZ80VB8mE63FWseY6P0j81?mode=wwt" class="btn btn-group">Grup WhatsApp</a>
-                <a href="https://whatsapp.com/channel/0029Vb7dqaHCXC3GwiYcXB3p" class="btn btn-channel">Saluran WhatsApp</a>
-            </div>
+        <!-- Bagian Informasi Biaya ICALZ STORE -->
+        <div class="fee-info">
+            <h2 class="fee-title">ICALZ STORE FEE</h2>
+            <table class="fee-table">
+                <thead>
+                    <tr>
+                        <th>Nominal Transaksi</th>
+                        <th>Biaya Admin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rp 1.000 - Rp 29.999</td>
+                        <td>Rp 1.000</td>
+                    </tr>
+                    <tr>
+                        <td>Rp 30.000 - Rp 65.999</td>
+                        <td>Rp 2.000</td>
+                    </tr>
+                    <tr>
+                        <td>Rp 66.000 - Rp 99.999</td>
+                        <td>Rp 3.000</td>
+                    </tr>
+                    <tr>
+                        <td>Rp 100.000 - Rp 150.999</td>
+                        <td>Rp 4.000</td>
+                    </tr>
+                    <tr>
+                        <td>Rp 151.000 - Rp 200.999</td>
+                        <td>Rp 6.000</td>
+                    </tr>
+                    <tr>
+                        <td>Rp 201.000 - Rp 250.999</td>
+                        <td>Rp 8.000</td>
+                    </tr>
+                    <tr>
+                        <td>Rp 251.000 - Rp 300.999</td>
+                        <td>Rp 10.000</td>
+                    </tr>
+                    <tr>
+                        <td>Rp 301.000 - Rp 400.999</td>
+                        <td>Rp 12.500</td>
+                    </tr>
+                    <tr>
+                        <td>Rp 401.000 - Rp 500.000</td>
+                        <td>Rp 15.000</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="text-align: center; margin-top: 15px; color: #ff9a00;">
+                <i class="fas fa-info-circle"></i> Biaya admin akan ditambahkan ke total pembayaran
+            </p>
         </div>
-        <div class="product">
-                <div class="product-img-container" onclick="openLightbox(3)">
-                    <img src="https://files.catbox.moe/13dmwy.jpg" alt="Produk 3D 4" class="product-img">
-                    <div class="zoom-icon">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">SECRET KOLEKSI</h3>
-                    <p class="product-desc">click untuk melihat gambar</p>
-                    <a href="https://wa.me/6285719223499?text=Halo,%20saya%20tertarik%20dengan%20Produk%204" class="btn btn-wa">Pesan via WhatsApp</a>
-                </div>
-            </div>
-        </div>
-            
-            <div class="product">
-                <div class="product-img-container" onclick="openLightbox(1)">
-                    <img src="https://files.catbox.moe/7q1a2y.jpg" alt="Produk 3D 2" class="product-img">
-                    <div class="zoom-icon">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">SECRET TUMBAL</h3>
-                    <p class="product-desc">click untuk melihat gambar</p>
-                    <a href="https://wa.me/6285719223499?text=Halo,%20saya%20tertarik%20dengan%20Produk%202" class="btn btn-wa">Pesan via WhatsApp</a>
-                </div>
-            </div>
-            
-            <div class="product">
-                <div class="product-img-container" onclick="openLightbox(2)">
-                    <img src="https://files.catbox.moe/0x6zg7.jpg" alt="Produk 3D 3" class="product-img">
-                    <div class="zoom-icon">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">LAIN"</h3>
-                    <p class="product-desc">click untuk melihat gambar</p>
-                    <a href="https://wa.me/6285719223499?text=Halo,%20saya%20tertarik%20dengan%20Produk%203" class="btn btn-wa">Pesan via WhatsApp</a>
-                </div>
-            </div>
-            
-            <div class="products">
-            <div class="product">
-                <div class="product-img-container" onclick="openLightbox(0)">
-                    <img src="https://files.catbox.moe/232th8.jpg" alt="Produk 3D 1" class="product-img">
-                    <div class="zoom-icon">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">KEBUTUHAN FISH IT</h3>
-                    <p class="product-desc">click untuk melihat gambar</p>
-                    <a href="https://wa.me/6285719223499?text=Halo,%20saya%20tertarik%20dengan%20Produk%201" class="btn btn-wa">Pesan via WhatsApp</a>
-                </div>
-            </div>
         
-        <footer>
-            <p>&copy; 2023 Produk Premium. All Rights Reserved.</p>
-        </footer>
-    </div>
-    
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
-        <div class="lightbox-nav">
-            <button class="lightbox-prev" onclick="changeImage(-1)">&#10094;</button>
-            <button class="lightbox-next" onclick="changeImage(1)">&#10095;</button>
+        <div class="payment-container">
+            <div class="payment-card">
+                <div class="payment-icon" style="color: #00dbde;">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h2 class="payment-title">DANA</h2>
+                <div class="payment-detail">085777414585</div>
+                <button class="btn copy-btn" data-text="085777414585">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </div>
+            
+            <div class="payment-card">
+                <div class="payment-icon" style="color: #00a859;">
+                    <i class="fab fa-google-wallet"></i>
+                </div>
+                <h2 class="payment-title">GOPAY</h2>
+                <div class="payment-detail">085719223499</div>
+                <button class="btn copy-btn" data-text="085719223499">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </div>
+            
+            <div class="payment-card">
+                <div class="payment-icon" style="color: #ffb600;">
+                    <i class="fas fa-university"></i>
+                </div>
+                <h2 class="payment-title">BANK MANDIRI</h2>
+                <div class="payment-detail">1030012695884</div>
+                <button class="btn copy-btn" data-text="1030012695884">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </div>
+            
+            <div class="payment-card qris-container">
+                <div class="payment-icon" style="color: #fc00ff;">
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <h2 class="payment-title">QRIS</h2>
+                <div class="qris-image">
+                    <img src="https://files.catbox.moe/hb73x6.jpg" alt="QRIS Payment">
+                </div>
+                <a href="https://files.catbox.moe/hb73x6.jpg" download="QRIS-Payment.jpg" class="btn">
+                    <i class="fas fa-download"></i> Download QR
+                </a>
+            </div>
         </div>
     </div>
     
+    <footer>
+        <p></p>
+    </footer>
+
     <script>
-        // Data gambar produk
-        const productImages = [
-            "https://files.catbox.moe/232th8.jpg",
-            "https://files.catbox.moe/7q1a2y.jpg",
-            "https://files.catbox.moe/0x6zg7.jpg",
-            "https://files.catbox.moe/13dmwy.jpg"
-        ];
-        
-        let currentImageIndex = 0;
-        
-        // Fungsi untuk membuka lightbox
-        function openLightbox(index) {
-            currentImageIndex = index;
-            document.getElementById('lightbox-img').src = productImages[currentImageIndex];
-            document.getElementById('lightbox').classList.add('active');
-            document.body.style.overflow = 'hidden'; // Mencegah scroll di background
-        }
-        
-        // Fungsi untuk menutup lightbox
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-            document.body.style.overflow = 'auto'; // Mengembalikan scroll
-        }
-        
-        // Fungsi untuk mengganti gambar di lightbox
-        function changeImage(direction) {
-            currentImageIndex += direction;
+        // Membuat elemen floating
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const count = 15;
             
-            // Loop melalui gambar
-            if (currentImageIndex >= productImages.length) {
-                currentImageIndex = 0;
-            } else if (currentImageIndex < 0) {
-                currentImageIndex = productImages.length - 1;
+            for (let i = 0; i < count; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                
+                // Posisi acak
+                const left = Math.random() * 100;
+                const size = Math.random() * 30 + 10;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 15;
+                
+                element.style.left = `${left}%`;
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                element.style.animationDelay = `${delay}s`;
+                element.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(element);
             }
-            
-            document.getElementById('lightbox-img').src = productImages[currentImageIndex];
         }
         
-        // Menutup lightbox dengan menekan tombol ESC
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeLightbox();
-            }
+        // Fungsi untuk menyalin teks
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.getAttribute('data-text');
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                });
+            });
         });
         
-        // Menutup lightbox dengan mengklik di luar gambar
-        document.getElementById('lightbox').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeLightbox();
-            }
+        // Efek parallax pada scroll
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const bg = document.querySelector('.bg-3d');
+            bg.style.transform = `translateZ(-50px) scale(1.5) translateY(${scrolled * 0.5}px)`;
+        });
+        
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingElements();
         });
     </script>
 </body>
