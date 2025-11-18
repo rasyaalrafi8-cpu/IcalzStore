@@ -3,468 +3,737 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment ICALZ STORE</title>
+    <title>ProdukIcal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Reset dan variabel warna */
+        :root {
+            --primary-blue: #1a237e;
+            --secondary-blue: #283593;
+            --accent-blue: #3949ab;
+            --light-blue: #e8eaf6;
+            --dark-blue: #0d1450;
+            --highlight-blue: #3d5afe;
+            --whatsapp-green: #25D366;
+            --text-light: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: #fff;
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--primary-blue) 50%, var(--secondary-blue) 100%);
+            color: var(--text-light);
             min-height: 100vh;
-            overflow-x: hidden;
-            perspective: 1000px;
+            line-height: 1.6;
         }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
-
+        
+        /* Header */
         header {
-            text-align: center;
-            padding: 40px 0;
-            position: relative;
-        }
-
-        .logo {
-            font-size: 3rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #00dbde, #fc00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transform: translateZ(30px);
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            color: #b8c2cc;
-            margin-bottom: 30px;
-            transform: translateZ(20px);
-        }
-
-        /* Styling untuk bagian informasi fee */
-        .fee-info {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transform-style: preserve-3d;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .fee-info::before {
-            content: '';
-            position: absolute;
+            background-color: rgba(13, 20, 80, 0.9);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ff9a00, #ff2e00);
-        }
-
-        .fee-title {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 600;
-            color: #ff9a00;
-        }
-
-        .fee-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-
-        .fee-table th, .fee-table td {
-            padding: 12px 15px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .fee-table th {
-            background: rgba(255, 154, 0, 0.2);
-            font-weight: 600;
-        }
-
-        .fee-table tr:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .payment-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .payment-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 100;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            transform-style: preserve-3d;
-            position: relative;
-            overflow: hidden;
         }
-
-        .payment-card:hover {
-            transform: translateY(-10px) rotateX(5deg);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .payment-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #00dbde, #fc00ff);
-        }
-
-        .payment-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .payment-title {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .payment-detail {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            text-align: center;
-            word-break: break-all;
-            transition: all 0.3s ease;
-        }
-
-        .payment-detail:hover {
-            background: rgba(0, 0, 0, 0.3);
-            transform: scale(1.02);
-        }
-
-        .qris-container {
+        
+        .header-content {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
         }
-
-        .qris-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-shadow: 0 0 10px var(--highlight-blue);
+            letter-spacing: 1px;
         }
-
-        .qris-image:hover {
-            transform: scale(1.05);
+        
+        .logo span {
+            color: var(--highlight-blue);
         }
-
-        .qris-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        
+        nav ul {
+            display: flex;
+            list-style: none;
         }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background: linear-gradient(45deg, #00dbde, #fc00ff);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: var(--text-light);
             text-decoration: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transform: translateZ(10px);
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: var(--transition);
         }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        
+        nav ul li a:hover {
+            background-color: var(--accent-blue);
+            transform: translateY(-2px);
         }
-
-        .btn i {
-            margin-right: 8px;
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-
-        .floating-elements {
-            position: fixed;
+        
+        .hero::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(61, 90, 254, 0.2) 0%, rgba(13, 20, 80, 0) 70%);
             z-index: -1;
         }
-
-        .floating-element {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(61, 90, 254, 0.5);
+            animation: glow 2s infinite alternate;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: var(--whatsapp-green);
+            color: white;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            animation: float 15s infinite linear;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            transition: var(--transition);
+            text-decoration: none;
         }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
         }
-
-        footer {
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(to right, var(--accent-blue), var(--highlight-blue));
+            color: var(--text-light);
+            padding: 14px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(61, 90, 254, 0.4);
+        }
+        
+        /* Product Sections */
+        .products {
+            padding: 60px 0;
+        }
+        
+        .section-title {
             text-align: center;
-            padding: 30px 0;
-            color: #b8c2cc;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--highlight-blue);
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, var(--highlight-blue), transparent, var(--accent-blue));
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .product-card:hover::before {
+            opacity: 0.1;
+        }
+        
+        .product-name {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+        
+        .product-price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--highlight-blue);
+            margin-bottom: 15px;
+        }
+        
+        .buy-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+            margin-top: auto;
+        }
+        
+        .buy-button:hover {
+            background: var(--whatsapp-green);
+            transform: scale(1.03);
+        }
+        
+        .whatsapp-icon {
+            font-size: 1.2rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-blue);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--highlight-blue);
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+            display: block;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-section a:hover {
+            color: var(--highlight-blue);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
         }
-
-        /* Efek 3D untuk latar belakang */
-        .bg-3d {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: url('https://files.catbox.moe/n83yo8.jpg') no-repeat center center;
-            background-size: cover;
-            transform: translateZ(-50px) scale(1.5);
-            filter: brightness(0.3) blur(2px);
+        
+        /* Animations */
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 15px rgba(61, 90, 254, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(61, 90, 254, 0.8), 0 0 30px rgba(61, 90, 254, 0.6);
+            }
         }
-
-        /* Responsif */
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .payment-container {
-                grid-template-columns: 1fr;
+            .header-content {
+                flex-direction: column;
+                text-align: center;
             }
             
-            .logo {
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
                 font-size: 2.5rem;
             }
             
-            .fee-table {
-                font-size: 0.85rem;
-            }
-            
-            .fee-table th, .fee-table td {
-                padding: 8px 6px;
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
         }
     </style>
 </head>
 <body>
-    <div class="bg-3d"></div>
-    
-    <div class="floating-elements" id="floatingElements"></div>
-    
-    <div class="container">
-        <header>
-            <h1 class="logo">PAYMENT ICALZ</h1>
-            <p class="tagline">Pembayaran Mudah & Cepat</p>
-        </header>
-        
-        <!-- Bagian Informasi Biaya ICALZ STORE -->
-        <div class="fee-info">
-            <h2 class="fee-title">ICALZ STORE FEE</h2>
-            <table class="fee-table">
-                <thead>
-                    <tr>
-                        <th>Nominal Transaksi</th>
-                        <th>Biaya Admin</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Rp 1.000 - Rp 29.999</td>
-                        <td>Rp 1.000</td>
-                    </tr>
-                    <tr>
-                        <td>Rp 30.000 - Rp 65.999</td>
-                        <td>Rp 2.000</td>
-                    </tr>
-                    <tr>
-                        <td>Rp 66.000 - Rp 99.999</td>
-                        <td>Rp 3.000</td>
-                    </tr>
-                    <tr>
-                        <td>Rp 100.000 - Rp 150.999</td>
-                        <td>Rp 4.000</td>
-                    </tr>
-                    <tr>
-                        <td>Rp 151.000 - Rp 200.999</td>
-                        <td>Rp 6.000</td>
-                    </tr>
-                    <tr>
-                        <td>Rp 201.000 - Rp 250.999</td>
-                        <td>Rp 8.000</td>
-                    </tr>
-                    <tr>
-                        <td>Rp 251.000 - Rp 300.999</td>
-                        <td>Rp 10.000</td>
-                    </tr>
-                    <tr>
-                        <td>Rp 301.000 - Rp 400.999</td>
-                        <td>Rp 12.500</td>
-                    </tr>
-                    <tr>
-                        <td>Rp 401.000 - Rp 500.000</td>
-                        <td>Rp 15.000</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="text-align: center; margin-top: 15px; color: #ff9a00;">
-                <i class="fas fa-info-circle"></i> Biaya admin akan ditambahkan ke total pembayaran
-            </p>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">KoIn<span>Via</span>Mitos</div>
+            <nav>
+                <ul>
+                    <li><a href="#koin">Koin</a></li>
+                    <li><a href="#batu">Batu Enchant</a></li>
+                    <li><a href="#joki-rod">Joki Rod</a></li>
+                    <li><a href="#joki-afk">Joki AFK</a></li>
+                    <li><a href="#joki-coin">Joki Coin</a></li>
+                </ul>
+            </nav>
         </div>
-        
-        <div class="payment-container">
-            <div class="payment-card">
-                <div class="payment-icon" style="color: #00dbde;">
-                    <i class="fas fa-mobile-alt"></i>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>PRODUK ICAL</h1>
+            <p>Temukan berbagai produk gaming dengan harga terbaik. Kualitas premium dengan layanan terpercaya untuk pengalaman gaming terbaik Anda.</p>
+            <a href="#products" class="cta-button">Lihat Produk</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <!-- Koin Section -->
+            <h2 class="section-title" id="koin">Koin</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <h3 class="product-name">100 Koin</h3>
+                    <div class="product-price">3K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20100%20Koin%20dengan%20harga%203K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
                 </div>
-                <h2 class="payment-title">DANA</h2>
-                <div class="payment-detail">085777414585</div>
-                <button class="btn copy-btn" data-text="085777414585">
-                    <i class="fas fa-copy"></i> Salin Nomor
-                </button>
+                <div class="product-card">
+                    <h3 class="product-name">200 Koin</h3>
+                    <div class="product-price">5K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20200%20Koin%20dengan%20harga%205K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">300 Koin</h3>
+                    <div class="product-price">9K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20300%20Koin%20dengan%20harga%209K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">500 Koin</h3>
+                    <div class="product-price">10K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20500%20Koin%20dengan%20harga%2010K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">700 Koin</h3>
+                    <div class="product-price">15K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20700%20Koin%20dengan%20harga%2015K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">1M Koin</h3>
+                    <div class="product-price">20K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%201M%20Koin%20dengan%20harga%2020K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">2M Koin</h3>
+                    <div class="product-price">40K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%202M%20Koin%20dengan%20harga%2040K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">3M Koin</h3>
+                    <div class="product-price">60K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%203M%20Koin%20dengan%20harga%2060K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">5M Koin</h3>
+                    <div class="product-price">90K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%205M%20Koin%20dengan%20harga%2090K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">10M Koin</h3>
+                    <div class="product-price">120K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%2010M%20Koin%20dengan%20harga%20120K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
             </div>
-            
-            <div class="payment-card">
-                <div class="payment-icon" style="color: #00a859;">
-                    <i class="fab fa-google-wallet"></i>
+
+            <!-- Batu Enchant Section -->
+            <h2 class="section-title" id="batu">Batu Enchant</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <h3 class="product-name">7 Batu</h3>
+                    <div class="product-price">1K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%207%20Batu%20Enchant%20dengan%20harga%201K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
                 </div>
-                <h2 class="payment-title">GOPAY</h2>
-                <div class="payment-detail">085719223499</div>
-                <button class="btn copy-btn" data-text="085719223499">
-                    <i class="fas fa-copy"></i> Salin Nomor
-                </button>
+                <div class="product-card">
+                    <h3 class="product-name">15 Batu</h3>
+                    <div class="product-price">2K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%2015%20Batu%20Enchant%20dengan%20harga%202K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">20 Batu</h3>
+                    <div class="product-price">3K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%2020%20Batu%20Enchant%20dengan%20harga%203K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">25 Batu</h3>
+                    <div class="product-price">4K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%2025%20Batu%20Enchant%20dengan%20harga%204K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">30 Batu</h3>
+                    <div class="product-price">5K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%2030%20Batu%20Enchant%20dengan%20harga%205K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">50 Batu</h3>
+                    <div class="product-price">10K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%2050%20Batu%20Enchant%20dengan%20harga%2010K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">70 Batu</h3>
+                    <div class="product-price">15K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%2070%20Batu%20Enchant%20dengan%20harga%2015K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">100 Batu</h3>
+                    <div class="product-price">20K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20100%20Batu%20Enchant%20dengan%20harga%2020K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
             </div>
-            
-            <div class="payment-card">
-                <div class="payment-icon" style="color: #ffb600;">
-                    <i class="fas fa-university"></i>
+
+            <!-- Joki Rod Section -->
+            <h2 class="section-title" id="joki-rod">Joki Rod</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <h3 class="product-name">Ghostfinn Rod</h3>
+                    <div class="product-price">80K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Ghostfinn%20Rod%20dengan%20harga%2080K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
                 </div>
-                <h2 class="payment-title">BANK MANDIRI</h2>
-                <div class="payment-detail">1030012695884</div>
-                <button class="btn copy-btn" data-text="1030012695884">
-                    <i class="fas fa-copy"></i> Salin Nomor
-                </button>
+                <div class="product-card">
+                    <h3 class="product-name">Astral Rod</h3>
+                    <div class="product-price">9K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Astral%20Rod%20dengan%20harga%209K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">Hazmat Rod</h3>
+                    <div class="product-price">11K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Hazmat%20Rod%20dengan%20harga%2011K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">Ares Rod</h3>
+                    <div class="product-price">20K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Ares%20Rod%20dengan%20harga%2020K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">Angler Rod</h3>
+                    <div class="product-price">40K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Angler%20Rod%20dengan%20harga%2040K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">Bamboo Rod</h3>
+                    <div class="product-price">60K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Bamboo%20Rod%20dengan%20harga%2060K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
             </div>
-            
-            <div class="payment-card qris-container">
-                <div class="payment-icon" style="color: #fc00ff;">
-                    <i class="fas fa-qrcode"></i>
+
+            <!-- Joki AFK Section -->
+            <h2 class="section-title" id="joki-afk">Joki AFK</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <h3 class="product-name">1 Day</h3>
+                    <div class="product-price">5K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Joki%20AFK%201%20Day%20dengan%20harga%205K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
                 </div>
-                <h2 class="payment-title">QRIS</h2>
-                <div class="qris-image">
-                    <img src="https://files.catbox.moe/hb73x6.jpg" alt="QRIS Payment">
+                <div class="product-card">
+                    <h3 class="product-name">2 Day</h3>
+                    <div class="product-price">10K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Joki%20AFK%202%20Day%20dengan%20harga%2010K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
                 </div>
-                <a href="https://files.catbox.moe/hb73x6.jpg" download="QRIS-Payment.jpg" class="btn">
-                    <i class="fas fa-download"></i> Download QR
-                </a>
+                <div class="product-card">
+                    <h3 class="product-name">3 Day</h3>
+                    <div class="product-price">15K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Joki%20AFK%203%20Day%20dengan%20harga%2015K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">4 Day</h3>
+                    <div class="product-price">20K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Joki%20AFK%204%20Day%20dengan%20harga%2020K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">5 Day</h3>
+                    <div class="product-price">25K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Joki%20AFK%205%20Day%20dengan%20harga%2025K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">6 Day</h3>
+                    <div class="product-price">27K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Joki%20AFK%206%20Day%20dengan%20harga%2027K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">7 Day</h3>
+                    <div class="product-price">30K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Joki%20AFK%207%20Day%20dengan%20harga%2030K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">14 Day</h3>
+                    <div class="product-price">50K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Joki%20AFK%2014%20Day%20dengan%20harga%2050K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">30 Day</h3>
+                    <div class="product-price">70K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Joki%20AFK%2030%20Day%20dengan%20harga%2070K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Joki Coin Section -->
+            <h2 class="section-title" id="joki-coin">Joki Coin</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <h3 class="product-name">1M Coin</h3>
+                    <div class="product-price">10K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Joki%20Coin%201M%20dengan%20harga%2010K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Code Redfinger Section -->
+            <h2 class="section-title">Code Redfinger</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <h3 class="product-name">7 Day</h3>
+                    <div class="product-price">23K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Code%20Redfinger%207%20Day%20dengan%20harga%2023K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card">
+                    <h3 class="product-name">1 Month</h3>
+                    <div class="product-price">65K</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20Code%20Redfinger%201%20Month%20dengan%20harga%2065K" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-    
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <p></p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Produk</h3>
+                    <a href="#koin">Koin</a>
+                    <a href="#batu">Batu Enchant</a>
+                    <a href="#joki-rod">Joki Rod</a>
+                    <a href="#joki-afk">Joki AFK</a>
+                    <a href="#joki-coin">Joki Coin</a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 KoIn Via Mitos. All rights reserved.
+            </div>
+        </div>
     </footer>
 
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/6285772096095" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <script>
-        // Membuat elemen floating
-        function createFloatingElements() {
-            const container = document.getElementById('floatingElements');
-            const count = 15;
-            
-            for (let i = 0; i < count; i++) {
-                const element = document.createElement('div');
-                element.classList.add('floating-element');
+        // Smooth scroll untuk navigasi
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
                 
-                // Posisi acak
-                const left = Math.random() * 100;
-                const size = Math.random() * 30 + 10;
-                const delay = Math.random() * 15;
-                const duration = Math.random() * 10 + 15;
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
                 
-                element.style.left = `${left}%`;
-                element.style.width = `${size}px`;
-                element.style.height = `${size}px`;
-                element.style.animationDelay = `${delay}s`;
-                element.style.animationDuration = `${duration}s`;
-                
-                container.appendChild(element);
-            }
-        }
-        
-        // Fungsi untuk menyalin teks
-        document.querySelectorAll('.copy-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const text = this.getAttribute('data-text');
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = this.innerHTML;
-                    this.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
-                    setTimeout(() => {
-                        this.innerHTML = originalText;
-                    }, 2000);
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
                 });
             });
         });
         
-        // Efek parallax pada scroll
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const bg = document.querySelector('.bg-3d');
-            bg.style.transform = `translateZ(-50px) scale(1.5) translateY(${scrolled * 0.5}px)`;
-        });
+        // Efek animasi untuk product cards
+        const productCards = document.querySelectorAll('.product-card');
         
-        // Inisialisasi
-        document.addEventListener('DOMContentLoaded', function() {
-            createFloatingElements();
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        productCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
         });
     </script>
 </body>
