@@ -15,6 +15,7 @@
             --dark-blue: #0d1450;
             --highlight-blue: #3d5afe;
             --whatsapp-green: #25D366;
+            --robux-orange: #ff6b00;
             --text-light: #ffffff;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             --transition: all 0.3s ease;
@@ -180,6 +181,12 @@
             font-size: 2.2rem;
             position: relative;
             padding-bottom: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .section-title:hover {
+            color: var(--highlight-blue);
         }
         
         .section-title::after {
@@ -191,6 +198,19 @@
             width: 100px;
             height: 3px;
             background: var(--highlight-blue);
+            transition: var(--transition);
+        }
+        
+        .section-title:hover::after {
+            width: 150px;
+        }
+        
+        .robux-title {
+            color: var(--robux-orange);
+        }
+        
+        .robux-title::after {
+            background: var(--robux-orange);
         }
         
         .product-grid {
@@ -198,6 +218,15 @@
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
             margin-bottom: 60px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .product-grid.active {
+            max-height: 2000px;
+            opacity: 1;
         }
         
         .product-card {
@@ -227,6 +256,10 @@
             transition: var(--transition);
         }
         
+        .robux-card::before {
+            background: linear-gradient(45deg, var(--robux-orange), transparent, #ff9500);
+        }
+        
         .product-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
@@ -242,11 +275,19 @@
             color: var(--text-light);
         }
         
+        .robux-name {
+            color: var(--robux-orange);
+        }
+        
         .product-price {
             font-size: 1.6rem;
             font-weight: 700;
             color: var(--highlight-blue);
             margin-bottom: 15px;
+        }
+        
+        .robux-price {
+            color: var(--robux-orange);
         }
         
         .buy-button {
@@ -360,27 +401,12 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <div class="logo">Produk<span>Ical</span>Store</div>
-            <nav>
-                <ul>
-                    <li><a href="#koin">Koin</a></li>
-                    <li><a href="#batu">Batu Enchant</a></li>
-                    <li><a href="#joki-rod">Joki Rod</a></li>
-                    <li><a href="#joki-afk">Joki AFK</a></li>
-                    <li><a href="#joki-coin">Joki Coin</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <h1>PRODUK ICAL</h1>
-            <p>Temukan berbagai produk gaming dengan harga terbaik. Kualitas premium dengan layanan terpercaya untuk pengalaman gaming terbaik Anda.</p>
+            <p>Temukan berbagai produk gaming dengan harga terbaik. Klik pada menu produk untuk melihat detailnya!</p>
             <a href="#products" class="cta-button">Lihat Produk</a>
         </div>
     </section>
@@ -389,8 +415,8 @@
     <section class="products" id="products">
         <div class="container">
             <!-- Koin Section -->
-            <h2 class="section-title" id="koin">Koin</h2>
-            <div class="product-grid">
+            <h2 class="section-title" id="koin" onclick="toggleSection('koin-grid')">Koin <i class="fas fa-chevron-down"></i></h2>
+            <div class="product-grid" id="koin-grid">
                 <div class="product-card">
                     <h3 class="product-name">100 Koin</h3>
                     <div class="product-price">3K</div>
@@ -464,8 +490,8 @@
             </div>
 
             <!-- Batu Enchant Section -->
-            <h2 class="section-title" id="batu">Batu Enchant</h2>
-            <div class="product-grid">
+            <h2 class="section-title" id="batu" onclick="toggleSection('batu-grid')">Batu Enchant <i class="fas fa-chevron-down"></i></h2>
+            <div class="product-grid" id="batu-grid">
                 <div class="product-card">
                     <h3 class="product-name">7 Batu</h3>
                     <div class="product-price">1K</div>
@@ -525,8 +551,8 @@
             </div>
 
             <!-- Joki Rod Section -->
-            <h2 class="section-title" id="joki-rod">Joki Rod</h2>
-            <div class="product-grid">
+            <h2 class="section-title" id="joki-rod" onclick="toggleSection('joki-rod-grid')">Joki Rod <i class="fas fa-chevron-down"></i></h2>
+            <div class="product-grid" id="joki-rod-grid">
                 <div class="product-card">
                     <h3 class="product-name">Ghostfinn Rod</h3>
                     <div class="product-price">80K</div>
@@ -572,8 +598,8 @@
             </div>
 
             <!-- Joki AFK Section -->
-            <h2 class="section-title" id="joki-afk">Joki AFK</h2>
-            <div class="product-grid">
+            <h2 class="section-title" id="joki-afk" onclick="toggleSection('joki-afk-grid')">Joki AFK <i class="fas fa-chevron-down"></i></h2>
+            <div class="product-grid" id="joki-afk-grid">
                 <div class="product-card">
                     <h3 class="product-name">1 Day</h3>
                     <div class="product-price">5K</div>
@@ -640,8 +666,8 @@
             </div>
 
             <!-- Joki Coin Section -->
-            <h2 class="section-title" id="joki-coin">Joki Coin</h2>
-            <div class="product-grid">
+            <h2 class="section-title" id="joki-coin" onclick="toggleSection('joki-coin-grid')">Joki Coin <i class="fas fa-chevron-down"></i></h2>
+            <div class="product-grid" id="joki-coin-grid">
                 <div class="product-card">
                     <h3 class="product-name">1M Coin</h3>
                     <div class="product-price">10K</div>
@@ -652,8 +678,8 @@
             </div>
 
             <!-- Code Redfinger Section -->
-            <h2 class="section-title">Code Redfinger</h2>
-            <div class="product-grid">
+            <h2 class="section-title" onclick="toggleSection('redfinger-grid')">Code Redfinger <i class="fas fa-chevron-down"></i></h2>
+            <div class="product-grid" id="redfinger-grid">
                 <div class="product-card">
                     <h3 class="product-name">7 Day</h3>
                     <div class="product-price">23K</div>
@@ -669,27 +695,221 @@
                     </a>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Produk</h3>
-                    <a href="#koin">Koin</a>
-                    <a href="#batu">Batu Enchant</a>
-                    <a href="#joki-rod">Joki Rod</a>
-                    <a href="#joki-afk">Joki AFK</a>
-                    <a href="#joki-coin">Joki Coin</a>
+            <!-- Robux Via Gamepass Section -->
+            <h2 class="section-title robux-title" id="robux" onclick="toggleSection('robux-gamepass-grid')">Robux Via Gamepass <i class="fas fa-chevron-down"></i></h2>
+            <div class="product-grid" id="robux-gamepass-grid">
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">100R</h3>
+                    <div class="product-price robux-price">Rp 13.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20100%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%2013.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">200R</h3>
+                    <div class="product-price robux-price">Rp 26.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20200%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%2026.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">300R</h3>
+                    <div class="product-price robux-price">Rp 38.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20300%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%2038.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">400R</h3>
+                    <div class="product-price robux-price">Rp 51.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20400%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%2051.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">500R</h3>
+                    <div class="product-price robux-price">Rp 64.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20500%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%2064.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">600R</h3>
+                    <div class="product-price robux-price">Rp 76.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20600%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%2076.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">700R</h3>
+                    <div class="product-price robux-price">Rp 88.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20700%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%2088.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">800R</h3>
+                    <div class="product-price robux-price">Rp 100.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20800%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%20100.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">900R</h3>
+                    <div class="product-price robux-price">Rp 112.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20900%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%20112.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">1.000R</h3>
+                    <div class="product-price robux-price">Rp 125.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%201.000%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%20125.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">2.000R</h3>
+                    <div class="product-price robux-price">Rp 250.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%202.000%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%20250.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">3.000R</h3>
+                    <div class="product-price robux-price">Rp 375.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%203.000%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%20375.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">5.000R</h3>
+                    <div class="product-price robux-price">Rp 630.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%205.000%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%20630.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">10.000R</h3>
+                    <div class="product-price robux-price">Rp 1.260.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%2010.000%20Robux%20Via%20Gamepass%20dengan%20harga%20Rp%201.260.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
                 </div>
             </div>
-            <div class="copyright">
-                &copy; 2023 KoIn Via Mitos. All rights reserved.
+
+            <!-- Robux Via Login Section -->
+            <h2 class="section-title robux-title" onclick="toggleSection('robux-login-grid')">Robux Via Login <i class="fas fa-chevron-down"></i></h2>
+            <div class="product-grid" id="robux-login-grid">
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">80R</h3>
+                    <div class="product-price robux-price">Rp 15.500</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%2080%20Robux%20Via%20Login%20dengan%20harga%20Rp%2015.500" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">160R</h3>
+                    <div class="product-price robux-price">Rp 30.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20160%20Robux%20Via%20Login%20dengan%20harga%20Rp%2030.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">240R</h3>
+                    <div class="product-price robux-price">Rp 45.500</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20240%20Robux%20Via%20Login%20dengan%20harga%20Rp%2045.500" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">320R</h3>
+                    <div class="product-price robux-price">Rp 60.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20320%20Robux%20Via%20Login%20dengan%20harga%20Rp%2060.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">400R</h3>
+                    <div class="product-price robux-price">Rp 74.500</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20400%20Robux%20Via%20Login%20dengan%20harga%20Rp%2074.500" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">480R</h3>
+                    <div class="product-price robux-price">Rp 89.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20480%20Robux%20Via%20Login%20dengan%20harga%20Rp%2089.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">560R</h3>
+                    <div class="product-price robux-price">Rp 104.500</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20560%20Robux%20Via%20Login%20dengan%20harga%20Rp%20104.500" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">640R</h3>
+                    <div class="product-price robux-price">Rp 119.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20640%20Robux%20Via%20Login%20dengan%20harga%20Rp%20119.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">720R</h3>
+                    <div class="product-price robux-price">Rp 133.500</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20720%20Robux%20Via%20Login%20dengan%20harga%20Rp%20133.500" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">800R</h3>
+                    <div class="product-price robux-price">Rp 148.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%20800%20Robux%20Via%20Login%20dengan%20harga%20Rp%20148.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">1000R</h3>
+                    <div class="product-price robux-price">Rp 153.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%201000%20Robux%20Via%20Login%20dengan%20harga%20Rp%20153.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">1500R</h3>
+                    <div class="product-price robux-price">Rp 227.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%201500%20Robux%20Via%20Login%20dengan%20harga%20Rp%20227.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">2000R</h3>
+                    <div class="product-price robux-price">Rp 301.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%202000%20Robux%20Via%20Login%20dengan%20harga%20Rp%20301.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">2500R</h3>
+                    <div class="product-price robux-price">Rp 380.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%202500%20Robux%20Via%20Login%20dengan%20harga%20Rp%20380.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
+                <div class="product-card robux-card">
+                    <h3 class="product-name robux-name">3000R</h3>
+                    <div class="product-price robux-price">Rp 450.000</div>
+                    <a href="https://wa.me/6285772096095?text=Halo,%20saya%20ingin%20membeli%203000%20Robux%20Via%20Login%20dengan%20harga%20Rp%20450.000" class="buy-button">
+                        <i class="fab fa-whatsapp whatsapp-icon"></i> Beli via WhatsApp
+                    </a>
+                </div>
             </div>
         </div>
-    </footer>
+    </section>
 
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/6285772096095" class="whatsapp-float" target="_blank">
@@ -697,6 +917,20 @@
     </a>
 
     <script>
+        // Fungsi untuk menampilkan/menyembunyikan produk
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('active');
+            
+            // Update ikon panah
+            const icon = section.previousElementSibling.querySelector('i');
+            if (section.classList.contains('active')) {
+                icon.className = 'fas fa-chevron-up';
+            } else {
+                icon.className = 'fas fa-chevron-down';
+            }
+        }
+        
         // Smooth scroll untuk navigasi
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -704,6 +938,13 @@
                 
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
+                
+                // Buka bagian yang diklik
+                const sectionId = targetId.substring(1) + '-grid';
+                const section = document.getElementById(sectionId);
+                if (section && !section.classList.contains('active')) {
+                    toggleSection(sectionId);
+                }
                 
                 window.scrollTo({
                     top: targetElement.offsetTop - 80,
